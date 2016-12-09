@@ -5,16 +5,16 @@ struct sp_point_t
 
 };
 
-SPPoint* spPointCreate(double* data, int dim, int index);
+SPPoint* spPointCreate(double* data, int dim, int index) {return NULL;}
 
-SPPoint* spPointCopy(SPPoint* source);
+SPPoint* spPointCopy(SPPoint* source) {return NULL;}
 
-void spPointDestroy(SPPoint* point);
+void spPointDestroy(SPPoint* point) {}
 
-int spPointGetDimension(SPPoint* point);
+int spPointGetDimension(SPPoint* point){return 0;}
 
-int spPointGetIndex(SPPoint* point);
+int spPointGetIndex(SPPoint* point) {return 0;}
 
-double spPointGetAxisCoor(SPPoint* point, int axis);
+double spPointGetAxisCoor(SPPoint* point, int axis) {return 0;}
 
-double spPointL2SquaredDistance(SPPoint* p, SPPoint* q);
+double spPointL2SquaredDistance(SPPoint* p, SPPoint* q) {return 0;}
