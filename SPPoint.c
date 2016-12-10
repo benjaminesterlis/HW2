@@ -7,7 +7,14 @@ struct sp_point_t
 	int index;
 };
 
-SPPoint* spPointCreate(double* data, int dim, int index) {return NULL;}
+SPPoint* spPointCreate(double* data, int dim, int index) 
+{
+	SPPoint *sp = malloc(sizeof(*sp));
+	sp.data = data;
+	sp.dim = dim;
+	sp.index = index;
+	return sp;
+}
 
 SPPoint* spPointCopy(SPPoint* source) {return NULL;}
 
