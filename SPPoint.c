@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 struct sp_point_t
 {
@@ -80,6 +81,13 @@ double spPointGetAxisCoor(SPPoint* point, int axis)
 
 double spPointL2SquaredDistance(SPPoint* p, SPPoint* q) 
 {
+	int i;
+	double dist = 0;
 	assert (p!=NULL && q!=NULL && p->dim == q->dim);
-	return 0;
+
+	for (i = 0; i < count; ++i)
+	{
+		dist += pow((p->data[i])-(p->data[i]),2);
+	}
+	return dist;
 }
