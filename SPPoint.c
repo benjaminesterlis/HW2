@@ -15,6 +15,8 @@ void copy(double *, double *, int range);
 
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
+	if (dim < 0 || index < 0 || data == NULL)
+		return NULL;
 	SPPoint *sp = malloc(sizeof(*sp));
 	if ((sp->data = (double *)malloc(sizeof(double) * dim)) == NULL)
 		return NULL; 
