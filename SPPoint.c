@@ -18,7 +18,10 @@ SPPoint* spPointCreate(double* data, int dim, int index)
 	return sp;
 }
 
-SPPoint* spPointCopy(SPPoint* source) {return NULL;}
+SPPoint* spPointCopy(SPPoint* source) 
+{
+	return NULL;
+}
 
 void spPointDestroy(SPPoint* point) {}
 
