@@ -11,7 +11,8 @@ struct sp_point_t
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
 	SPPoint *sp = malloc(sizeof(*sp));
-	sp->data = (double *)malloc(sizeof(data)); 
+	if((sp->data = (double *)malloc(sizeof(data))) == NULL)
+		return NULL; 
 	memcpy(sp->data, data, dim);
 	sp->dim = dim;
 	sp->index = index;
@@ -20,7 +21,14 @@ SPPoint* spPointCreate(double* data, int dim, int index)
 
 SPPoint* spPointCopy(SPPoint* source) 
 {
-	return NULL;
+	if((SPPoint *sp = malloc(sizeof(*source))) == NULL)
+		return NULL;
+	if((sp->data = (double *)malloc(sizeof(source->data))) == NULL)
+		return NULL;
+	memcpy(sp->data, source->data, source->dim);
+	sp->dim = source->dim;
+	sp->index = source->index;
+	return sp;
 }
 
 void spPointDestroy(SPPoint* point) {}
