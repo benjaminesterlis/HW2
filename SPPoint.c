@@ -57,22 +57,6 @@ int spPointGetIndex(SPPoint* point)
 	return point->index;
 }
 
-int main(void)
-{
-	double d[3] = {0.23,0.7,0.24};
-	SPPoint *sp = spPointCreate(d,3,1);
-	SPPoint *spcpy = spPointCopy(sp);
-	if (spPointGetAxisCoor(sp,2) != sp->data[1])
-	{
-		printf("%s\n", "something wrong");
-	}
-	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
-	spPointDestroy(sp);
-	spPointDestroy(spcpy);
-	printf("%s\n", "destroied");
-	return 0;
-}
-
 double spPointGetAxisCoor(SPPoint* point, int axis) 
 {
 	assert (point!=NULL && axis < point->dim);
@@ -90,4 +74,20 @@ double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 		dist += pow((p->data[i])-(p->data[i]),2);
 	}
 	return dist;
+}
+
+int main(void)
+{
+	double d[3] = {0.23,0.7,0.24};
+	SPPoint *sp = spPointCreate(d,3,1);
+	SPPoint *spcpy = spPointCopy(sp);
+	if (spPointGetAxisCoor(sp,2) != sp->data[1])
+	{
+		printf("%s\n", "something wrong");
+	}
+	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
+	spPointDestroy(sp);
+	spPointDestroy(spcpy);
+	printf("%s\n", "destroied");
+	return 0;
 }
