@@ -69,7 +69,7 @@ double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 	double dist = 0;
 	assert (p!=NULL && q!=NULL && p->dim == q->dim);
 
-	for (i = 0; i < count; ++i)
+	for (i = 0; i < p->dim; ++i)
 	{
 		dist += pow((p->data[i])-(p->data[i]),2);
 	}
