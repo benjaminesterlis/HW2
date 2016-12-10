@@ -73,7 +73,7 @@ double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 	for (i = 0; i < p->dim; ++i)
 	{
 		dist += pow((p->data[i])-(q->data[i]),2);
-		printf("%f %d\n",p->data[i],i); // why the last cell in the array is 0
+		//printf("%f %d\n",p->data[i],i); // why the last cell in the array is 0
 	}
 	return dist;
 }
@@ -87,23 +87,23 @@ void copy(double *dest, double *src, int range)
 	}
 }
 
-int main(void)
-{
-	double d[3] = {0.23,0.7,0.24};
-	double d1[3] = {1.23,0.7,0.25};
-	SPPoint *sp = spPointCreate(d,3,1);
-	printf("%f\n",sp->data[1] );
-	SPPoint *sp1 = spPointCreate(d1,3,1);
-	SPPoint *spcpy = spPointCopy(sp);
-	if (spPointGetAxisCoor(sp,1) != sp->data[0])
-	{
-		printf("%s\n", "something wrong");
-	}
-	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
-	printf("%f\n", spPointL2SquaredDistance(sp,sp1));
-	spPointDestroy(sp);
-	spPointDestroy(sp1);
-	spPointDestroy(spcpy);
-	printf("%s\n", "destroied");
-	return 0;
-}
+// int main(void)
+// {
+// 	double d[3] = {0.23,0.7,0.24};
+// 	double d1[3] = {1.23,0.7,0.25};
+// 	SPPoint *sp = spPointCreate(d,3,1);
+// 	printf("%f\n",sp->data[1] );
+// 	SPPoint *sp1 = spPointCreate(d1,3,1);
+// 	SPPoint *spcpy = spPointCopy(sp);
+// 	if (spPointGetAxisCoor(sp,1) != sp->data[0])
+// 	{
+// 		printf("%s\n", "something wrong");
+// 	}
+// 	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
+// 	printf("%f\n", spPointL2SquaredDistance(sp,sp1));
+// 	spPointDestroy(sp);
+// 	spPointDestroy(sp1);
+// 	spPointDestroy(spcpy);
+// 	printf("%s\n", "destroied");
+// 	return 0;
+// }
