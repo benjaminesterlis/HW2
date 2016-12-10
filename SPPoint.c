@@ -10,9 +10,9 @@ struct sp_point_t
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
 	SPPoint *sp = malloc(sizeof(*sp));
-	sp.data = data;
-	sp.dim = dim;
-	sp.index = index;
+	sp->data = data;
+	sp->dim = dim;
+	sp->index = index;
 	return sp;
 }
 
