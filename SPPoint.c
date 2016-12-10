@@ -40,11 +40,19 @@ int main(void)
 	SPPoint *sp = spPointCreate(d,3,1);
 	SPPoint *spcpy = spPointCopy(sp);
 	printf("dim is: %d index is: %d\n", spcpy->dim, spcpy->index);
+	spPointDestroy(sp);
+	spPointDestroy(spcpy);
+	printf("%s\n", "destroied");
 	return 0;
 }
-/*
-void spPointDestroy(SPPoint* point) {}
 
+void spPointDestroy(SPPoint* point) 
+{
+	free(point->data);
+	free(point);
+}
+
+/*
 int spPointGetDimension(SPPoint* point){return 0;}
 
 int spPointGetIndex(SPPoint* point) {return 0;}
