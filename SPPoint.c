@@ -43,9 +43,12 @@ SPPoint* spPointCopy(SPPoint* source)
 
 void spPointDestroy(SPPoint* point) 
 {	
-	assert (point != NULL);
-	free(point->data);
-	free(point);
+	if (point != NULL)
+	{
+		free(point->data);
+		free(point);
+	}
+
 }
 
 int spPointGetDimension(SPPoint* point)
