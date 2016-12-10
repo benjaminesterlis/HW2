@@ -16,7 +16,7 @@ void copy(double *, double *, int range);
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
 	SPPoint *sp = malloc(sizeof(*sp));
-	if ((sp->data = (double *)malloc(sizeof(data))) == NULL)
+	if ((sp->data = (double *)malloc(sizeof(double) * dim)) == NULL)
 		return NULL; 
 	copy(sp->data, data, dim);
 	sp->dim = dim;
@@ -30,7 +30,7 @@ SPPoint* spPointCopy(SPPoint* source)
 	SPPoint *sp = malloc(sizeof(*source));
 	if (sp == NULL)
 		return NULL;
-	if ((sp->data = (double *)malloc(sizeof(source->data))) == NULL)
+	if ((sp->data = (double *)malloc(sizeof(double) * source->dim)) == NULL)
 		return NULL;
 	copy(sp->data, source->data, source->dim);
 	sp->dim = source->dim;
