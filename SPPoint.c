@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 struct sp_point_t
 {
@@ -23,6 +24,7 @@ SPPoint* spPointCreate(double* data, int dim, int index)
 
 SPPoint* spPointCopy(SPPoint* source) 
 {
+	assert (source != NULL);
 	SPPoint *sp = malloc(sizeof(*source));
 	if (sp == NULL)
 		return NULL;
@@ -34,29 +36,39 @@ SPPoint* spPointCopy(SPPoint* source)
 	return sp;
 }
 
+
+void spPointDestroy(SPPoint* point) 
+{	
+	assert (point != NULL);
+	free(point->data);
+	free(point);
+}
+
+int spPointGetDimension(SPPoint* point)
+{
+	assert (point != NULL);
+	return point->dim;
+}
+
+int spPointGetIndex(SPPoint* point) 
+{
+	assert (point != NULL);
+	return point->index;
+}
+
 int main(void)
 {
 	double d[3] = {0.23,0.7,0.24};
 	SPPoint *sp = spPointCreate(d,3,1);
 	SPPoint *spcpy = spPointCopy(sp);
-	printf("dim is: %d index is: %d\n", spcpy->dim, spcpy->index);
+	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
 	spPointDestroy(sp);
 	spPointDestroy(spcpy);
 	printf("%s\n", "destroied");
 	return 0;
 }
 
-void spPointDestroy(SPPoint* point) 
-{
-	free(point->data);
-	free(point);
-}
-
 /*
-int spPointGetDimension(SPPoint* point){return 0;}
-
-int spPointGetIndex(SPPoint* point) {return 0;}
-
 double spPointGetAxisCoor(SPPoint* point, int axis) {return 0;}
 
 double spPointL2SquaredDistance(SPPoint* p, SPPoint* q) {return 0;}
