@@ -1,5 +1,4 @@
 #include "SPPoint.h"
-#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -12,12 +11,14 @@ struct sp_point_t
 	int index;
 };
 
+void copy(double *, double *, int range);
+
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
 	SPPoint *sp = malloc(sizeof(*sp));
 	if ((sp->data = (double *)malloc(sizeof(data))) == NULL)
 		return NULL; 
-	memcpy(sp->data, data, dim);
+	copy(sp->data, data, dim);
 	sp->dim = dim;
 	sp->index = index;
 	return sp;
@@ -31,7 +32,7 @@ SPPoint* spPointCopy(SPPoint* source)
 		return NULL;
 	if ((sp->data = (double *)malloc(sizeof(source->data))) == NULL)
 		return NULL;
-	memcpy(sp->data, source->data, source->dim);
+	copy(sp->data, source->data, source->dim);
 	sp->dim = source->dim;
 	sp->index = source->index;
 	return sp;
@@ -72,21 +73,36 @@ double spPointL2SquaredDistance(SPPoint* p, SPPoint* q)
 	for (i = 0; i < p->dim; ++i)
 	{
 		dist += pow((p->data[i])-(p->data[i]),2);
+		printf("%f %d\n",p->data[i],i);
 	}
 	return dist;
+}
+
+void copy(double *dest, double *src, int range)
+{
+	int i;
+	for (i = 0; i < range; ++i)
+	{
+		dest[i] = src[i];
+	}
 }
 
 int main(void)
 {
 	double d[3] = {0.23,0.7,0.24};
+	double d1[3] = {1.23,0.7,0.24};
 	SPPoint *sp = spPointCreate(d,3,1);
+	printf("%f\n",sp->data[1] );
+	SPPoint *sp1 = spPointCreate(d1,3,1);
 	SPPoint *spcpy = spPointCopy(sp);
-	if (spPointGetAxisCoor(sp,2) != sp->data[1])
+	if (spPointGetAxisCoor(sp,1) != sp->data[0])
 	{
 		printf("%s\n", "something wrong");
 	}
 	printf("dim is: %d index is: %d\n", spPointGetDimension(spcpy), spPointGetIndex(spcpy));
+	printf("%f\n", spPointL2SquaredDistance(sp,sp1)+2);
 	spPointDestroy(sp);
+	spPointDestroy(sp1);
 	spPointDestroy(spcpy);
 	printf("%s\n", "destroied");
 	return 0;
