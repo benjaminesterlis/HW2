@@ -69,7 +69,15 @@ int main(void)
 }
 
 /*
-double spPointGetAxisCoor(SPPoint* point, int axis) {return 0;}
+double spPointGetAxisCoor(SPPoint* point, int axis) 
+{
+	assert (point!=NULL && axis < dim(point));
+	return 0;
+}
 
-double spPointL2SquaredDistance(SPPoint* p, SPPoint* q) {return 0;}
+double spPointL2SquaredDistance(SPPoint* p, SPPoint* q) 
+{
+	assert (p!=NULL AND q!=NULL AND dim(p) == dim(q));
+	return 0;
+}
 */
