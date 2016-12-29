@@ -31,10 +31,10 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 
 	SPBQueue *spq = malloc(sizeof(*spq));
 	if ( spq == NULL )
-		return SP_BPQUEUE_OUT_OF_MEMORY;
+		return NULL;
 	
-	if ((spq->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL)	
-		return SP_BPQUEUE_OUT_OF_MEMORY;
+	if ((spq->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL))	
+		return NULL;
 
 	spq->is_empty = True;
 	spq->size = 0;
@@ -44,7 +44,31 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 
 }
 
-SPBPQueue* spBPQueueCopy(SPBPQueue* source);
+void  ElementCopy(*target,*source){
+	int i;
+	for (i = 0; i < range; ++i)
+	{
+		target[i].index = source[i].index;
+		target[i].value = source[i].value;
+	}
+}
+
+SPBPQueue* spBPQueueCopy(SPBPQueue* source)
+{
+	SPBPQueue *spcpy = malloc(sizeof(*spcpy));
+	if ( spcpy == NULL )
+		return NULL;
+
+	spcpy->is_empty = source->is_empty;
+	spcpy->size = source->size;
+	spcpy->max_size = source->max_size;
+	spcpy->max_value = source->max_value;
+	if ((spcpy->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL))	
+		return NULL;
+	copy(spcpy,source);
+
+
+}
 
 
 void spBPQueueDestroy(SPBPQueue* source);
