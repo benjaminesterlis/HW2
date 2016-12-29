@@ -44,7 +44,7 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 
 }
 
-void  ElementCopy(*target,*source){
+void ElementCopy(*target,*source){
 	int i;
 	for (i = 0; i < range; ++i)
 	{
