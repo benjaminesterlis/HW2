@@ -33,6 +33,7 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 	if ( spq == NULL )
 		return NULL;
 	
+<<<<<<< HEAD
 	if ((spq->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL))	
 		return NULL;
 
