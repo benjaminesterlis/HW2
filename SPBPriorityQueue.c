@@ -107,7 +107,6 @@ bool spBPQueueIsEmpty(SPBPQueue* source)
 	if (source->is_empty == 0)
 		return True;
 	return False;
-};
-
+}
 
 bool spBPQueueIsFull(SPBPQueue* source);
