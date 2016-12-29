@@ -18,11 +18,13 @@ SPPoint* spPointCreate(double* data, int dim, int index)
 	if (dim < 0 || index < 0 || data == NULL)
 		return NULL;
 	SPPoint *sp = malloc(sizeof(*sp));
+	if (sp == NULL)
+		return NULL;
 	if ((sp->data = (double *)malloc(sizeof(double) * dim)) == NULL)
 		return NULL; 
 	copy(sp->data, data, dim);
-	sp->dim = dim;
-	sp->index = index;
+	sp->dim = dim; // (*sp).dim = dim
+	sp->index = index; // (*sp).index = index
 	return sp;
 }
 
