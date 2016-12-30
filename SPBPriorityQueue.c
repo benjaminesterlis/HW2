@@ -102,7 +102,7 @@ void spBPQueueDestroy(SPBPQueue* source)
 	{
 		int i;
 		for (i = 0; i < source->size; ++i)
-			free(source->elements[source->size -i]);
+			free(source->elements[source->size -1 -i]);
 
 		free(source->elements);
 		free(source);
