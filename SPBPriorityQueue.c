@@ -13,7 +13,7 @@ struct sp_bp_queue_t
 
 /**
  * Allocate a new Queue in the memory.
- * new SPBQueue such that:
+ * New SPBQueue such that:
  * - is_empty = flag to chack is empty, set to False.
  * - size = the current size of the queue, set to zero.
  * - max_value =  the max value in the queue.
@@ -55,8 +55,8 @@ void ElementCopy(SPBPQueue* target,SPBPQueue* source){
 	int i;
 	for (i = 0; i < source->size; ++i)
 	{
-		target[i].index = source[i].index;
-		target[i].value = source[i].value;
+		target->elements[i].index = source->elements[i].index;//ask beni if need ->elements
+		target->elements[i].value = source->elements[i].value;//ask beni if need ->elements
 	}
 }
 
@@ -91,19 +91,49 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 }
 
 /**
+ * Free all memory allocation associated with the Queue,
+ * First, free all data from the cells.
+ * Second, free the point to the arrary.
+ * Third, free the Queue pointer.
  *
- *
- *
- *
- *
+ * @param source - the Queue we want to free all memory aloocation associated.
+ * Assert if source == NULL or queue is empty
 */
 void spBPQueueDestroy(SPBPQueue* source)
 {
+	if (source == NULL)
+		return;
 
+	if (is_empty)
+		return;
+
+	int i;
+	for (i = 0; i < source->size; ++i)
+		free(source->elements[source->size -i]);
+
+	free(source->elements);
+	free(source);
 }
 
+/**
+ * remove all elemnts in the Queue.
+ *
+ *
+ *
+ */
+void spBPQueueClear(SPBPQueue* source)
+{
+	if (source == NULL)
+		return;
 
-void spBPQueueClear(SPBPQueue* source);
+	if (is_empty)
+		return;
+
+	int i;
+	for (i = 0; i < source->size; ++i)
+		free(source->elements[source->size -i]);
+
+}
 
 
 int spBPQueueSize(SPBPQueue* source);
@@ -129,12 +159,16 @@ double spBPQueueMinValue(SPBPQueue* source);
 
 double spBPQueueMaxValue(SPBPQueue* source);
 
-
+/**
+ * say whatever the Queue is empty or not.
+ *
+ * @param source - the Queue to check.
+ * @retrun True in case Queue is empty.
+ *Otherwise, return False.
+ */
 bool spBPQueueIsEmpty(SPBPQueue* source)
 {
-	if (source->is_empty == 0)
-		return True;
-	return False;
+	return is_empty;
 }
 
 bool spBPQueueIsFull(SPBPQueue* source);
