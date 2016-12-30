@@ -18,11 +18,12 @@ struct sp_bp_queue_t
  * - size = the current size of the queue, set to zero.
  * - max_value =  the max value in the queue.
  * - elements = pointer to the first element in the queue.
+ * - max_size = the upper bould of elements in the Queue.
  * 
  * @param  maxSize - int, which refer to the upperbound to no. of elements
  * @return spq - pointer to SPBPQueue
- * SP_BPQUEUE_OUT_OF_MEMORY in case of allocation failure.
- * SP_BPQUEUE_INVALID_ARGUMENT in case of non-positive maxSize.
+ * NULL in case of allocation failure.
+ * NULL in case of non-positive maxSize.
  */
 SPBPQueue* spBPQueueCreate(int maxSize)
 {
@@ -41,18 +42,38 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 	spq->max_size = maxSize;
 	spq->max_value = 0;
 	return spq;
-
 }
 
-void ElementCopy(*target,*source){
+
+/**
+ * Copy and elements array from source to target
+ *
+ * @param target - the destination Queue to insert the elements array.
+ * @param source - the source Queue which we copy elemnts from.
+ */
+void ElementCopy(SPBPQueue* target,SPBPQueue* source){
 	int i;
-	for (i = 0; i < range; ++i)
+	for (i = 0; i < source->size; ++i)
 	{
 		target[i].index = source[i].index;
 		target[i].value = source[i].value;
 	}
 }
 
+/**
+ * Allocate a copu of the source SPBPQueue.
+ * Copy the source SPBPQueue into a new Queue called spcpy such that:
+ *
+ * - is_empty(spcpy) = is_empty(source) (spcpy and source has the same flag for emptyness). 
+ * - size(spcpy) = size(source) (spcpy and source have the same size).
+ * - max_value(spcpy) = max_value(source) (spcpy and source have the same max value).
+ * - max_size(spcpy) = max_size(source) (spcpy and source have the same upper bound of elements).
+ * - elements(spcpy) = elements(source) (spcpy and source have the same elements, which include the same index and value inside).
+ *
+ * @param source - the SPBPQueue we want to copy.
+ * @return spcpy - copy of source.
+ * NULL in case of allocation failure.  
+ */
 SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 {
 	SPBPQueue *spcpy = malloc(sizeof(*spcpy));
@@ -65,11 +86,21 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 	spcpy->max_value = source->max_value;
 	if ((spcpy->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL))	
 		return NULL;
-	copy(spcpy,source);
+	Elementcopy(spcpy,source);
+	return spcpy;
 }
 
+/**
+ *
+ *
+ *
+ *
+ *
+*/
+void spBPQueueDestroy(SPBPQueue* source)
+{
 
-void spBPQueueDestroy(SPBPQueue* source);
+}
 
 
 void spBPQueueClear(SPBPQueue* source);
