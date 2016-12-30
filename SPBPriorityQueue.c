@@ -7,16 +7,14 @@ struct sp_bp_queue_t
 	int is_empty;
 	int size;
 	int max_size;
-	int max_value;
-
 };
 
 /**
  * Allocate a new Queue in the memory.
  * New SPBQueue such that:
+ *
  * - is_empty = flag to chack is empty, set to false.
  * - size = the current size of the queue, set to zero.
- * - max_value =  the max value in the queue.
  * - elements = pointer to the first element in the queue.
  * - max_size = the upper bould of elements in the Queue.
  * 
@@ -40,7 +38,6 @@ SPBPQueue* spBPQueueCreate(int maxSize)
 	spq->is_empty = true;
 	spq->size = 0;
 	spq->max_size = maxSize;
-	spq->max_value = 0;
 	return spq;
 }
 
@@ -66,7 +63,6 @@ void ElementCopy(SPBPQueue* target,SPBPQueue* source){
  *
  * - is_empty(spcpy) = is_empty(source) (spcpy and source has the same flag for emptyness). 
  * - size(spcpy) = size(source) (spcpy and source have the same size).
- * - max_value(spcpy) = max_value(source) (spcpy and source have the same max value).
  * - max_size(spcpy) = max_size(source) (spcpy and source have the same upper bound of elements).
  * - elements(spcpy) = elements(source) (spcpy and source have the same elements, which include the same index and value inside).
  *
@@ -83,10 +79,11 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 	spcpy->is_empty = source->is_empty;
 	spcpy->size = source->size;
 	spcpy->max_size = source->max_size;
-	spcpy->max_value = source->max_value;
+
 	if ((spcpy->elements = (BPQueueElement*) malloc(sizeof(BPQueueElement) * maxSize) == NULL))	
 		return NULL;
 	Elementcopy(spcpy,source);
+
 	return spcpy;
 }
 
@@ -97,45 +94,63 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
  * Third, free the Queue pointer.
  *
  * @param source - the Queue we want to free all memory aloocation associated.
- * Assert if source == NULL or queue is empty
+ * 'Ignore' if source == NULL or queue is empty.
 */
 void spBPQueueDestroy(SPBPQueue* source)
 {
-	if (source == NULL)
-		return;
+	if ( source != NULL && !is_empty)
+	{
+		int i;
+		for (i = 0; i < source->size; ++i)
+			free(source->elements[source->size -i]);
 
-	if (is_empty)
-		return;
-
-	int i;
-	for (i = 0; i < source->size; ++i)
-		free(source->elements[source->size -i]);
-
-	free(source->elements);
-	free(source);
+		free(source->elements);
+		free(source);
+	}
 }
 
 /**
- * remove all elemnts in the Queue.
+ * Remove all elements in the Queue.
  *
- *
- *
+ * @param source - the Queue need to clear.
+ * 'Ignore' if source == NULL or queue is empty.
  */
 void spBPQueueClear(SPBPQueue* source)
 {
 	if ( source != NULL && !is_empty)
 	{
-	int i;
-	for (i = 0; i < source->size; ++i)
-		free(source->elements[source->size -i]);
+		int i;
+		for (i = 0; i < source->size; ++i)
+			free(source->elements[source->size -i]);
 	}
 }
 
+/**
+ * Give the size of the Queue.
+ *
+ * @param source - the queue need to check size.
+ * @retrun the size of the queue,
+ * In case NULL pointer retrun -1.
+ */
+int spBPQueueSize(SPBPQueue* source)
+{
+	if (source != NULL)
+		return source->size;
+	return -1;
+}
 
-int spBPQueueSize(SPBPQueue* source);
-
-
-int spBPQueueGetMaxSize(SPBPQueue* source);
+/**
+ * Give the upperbound of the elements to insert source queue.
+ *
+ * @param source - the queue need to check upperbound.
+ * @retrun the upperbound of the array,
+ * In case NULL pointer retrun -1.
+ */
+int spBPQueueGetMaxSize(SPBPQueue* source){
+	if (source != NULL)
+		return source->max_size;
+	return -1;
+}
 
 
 SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value);
@@ -172,7 +187,7 @@ bool spBPQueueIsEmpty(SPBPQueue* source)
 /**
  * say whatever the Queue is full or not
  *
- * @param source- the Queue to check.
+ * @param source - the Queue to check.
  * @retrun true in case Queue is full or the Queue is a NULL pointer,
  * Otherwise, return false.
  */
