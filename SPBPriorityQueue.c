@@ -113,16 +113,15 @@ void spBPQueueDestroy(SPBPQueue* source)
  * Remove all elements in the Queue.
  *
  * @param source - the Queue need to clear.
- * 'Ignore' if source == NULL or queue is empty.
+ * 'Ignore' if source == NULL
  */
 void spBPQueueClear(SPBPQueue* source)
 {
-	if ( source != NULL && !is_empty)
-	{
-		int i;
-		for (i = 0; i < source->size; ++i)
-			free(source->elements[source->size -i]);
-	}
+	if ( source == NULL)
+		return;
+	source->is_empty = true;
+	source->size = 0;
+
 }
 
 /**
