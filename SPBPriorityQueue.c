@@ -10,6 +10,7 @@ struct sp_bp_queue_t
 };
 
 #define InsertElemNext(*source,i,index,value) {source->elements[i].index = index; source->elements[i].value = value;}
+#define CheckIfNULL(*source){ if ( source == NULL) return NULL}
 
 /**
  * Allocate a new Queue in the memory.
@@ -54,8 +55,9 @@ void ElementCopy(SPBPQueue* target,SPBPQueue* source){
 	int i;
 	for (i = 0; i < source->size; ++i)
 	{
-		target->elements[i].index = source->elements[i].index;//ask beni if need ->elements
-		target->elements[i].value = source->elements[i].value;//ask beni if need ->elements
+		target->elements[i].index = source->elements[i].index;
+		target->elements[i].value = source->elements[i].value;
+//##############ask beni if can do target->elements[i] = source->elements[i]#############################################################
 	}
 }
 
@@ -199,8 +201,19 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	}
 }
 
-
-SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source);
+/**
+ * Remove the lowest value element form the queue.
+ * 
+ * @param source - the queue need to remove lowest value element.
+ * @return a new SP_BPQUEUE_MSG object with the information on the Deuque.
+ */
+SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source){
+	if ( source == NULL)
+		return SP_BPQUEUE_INVALID_ARGUMENT;
+	if ( source->size == 0)
+		return SP_BPQUEUE_EMPTY;
+	source->size--;
+}
 
 
 SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res);
