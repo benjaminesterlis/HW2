@@ -3,11 +3,13 @@
 
 struct sp_bp_queue_t
 {
-	BPQueueElement *elements;
+	BPQueueElement *elements; // the elemnts will be showed from big to small.
 	int is_empty;
 	int size;
 	int max_size;
 };
+
+#define InsertElemNext(*source,i,index,value) {source->elements[i].index = index; source->elements[i].value = value;}
 
 /**
  * Allocate a new Queue in the memory.
@@ -128,8 +130,8 @@ void spBPQueueClear(SPBPQueue* source)
  * Give the size of the Queue.
  *
  * @param source - the queue need to check size.
- * @retrun the size of the queue,
- * In case NULL pointer retrun -1.
+ * @return the size of the queue,
+ * In case NULL pointer return -1.
  */
 int spBPQueueSize(SPBPQueue* source)
 {
@@ -142,8 +144,8 @@ int spBPQueueSize(SPBPQueue* source)
  * Give the upperbound of the elements to insert source queue.
  *
  * @param source - the queue need to check upperbound.
- * @retrun the upperbound of the array,
- * In case NULL pointer retrun -1.
+ * @return the upperbound of the array,
+ * In case NULL pointer return -1.
  */
 int spBPQueueGetMaxSize(SPBPQueue* source){
 	if (source != NULL)
@@ -151,8 +153,51 @@ int spBPQueueGetMaxSize(SPBPQueue* source){
 	return -1;
 }
 
+/**
+ * Insert a new BPQueueElement (which will create) to the queue with the corret fields.
+ * The Queue is ordinized from big to small,cell[0] is the biggest.
+ *
+ * @param source - the queue.
+ * @param index - the index given.
+ * @param value - the value given.
+ * @return a new SP_BPQUEUE_MSG object with the information on the insert.
+ */
+SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
+{
+	if ( source == NULL)
+		return SP_BPQUEUE_INVALID_ARGUMENT;
+	
+	//in case the source queue is full
+	if ( source->size == source->size_max)
+	{
+		if (source->elements[0].value > value )
+		{
+			InsertElemNext(source,0,index,value)
+			return SP_BPQUEUE_SUCCESS;
+		}
+		return SP_BPQUEUE_FULL;
+	}
 
-SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value);
+	source->size++;
+	//in case the source queue is empty
+	if (source->size == 0)
+	{
+		InsertElemNext(source, 0, index, value)
+		return SP_BPQUEUE_SUCCESS;
+	}
+
+	//otherwise
+	int i;
+	for ( i = source->size -1 ; i > 0; i--) 
+	{
+		InsertElemNext(source, i, source->elements[i-1].index, source->elements[i-1].value)
+		if ( source->elements [i-1].value > value)
+		{
+			InsertElemNext(source, i, index, value)
+			return SP_BPQUEUE_SUCCESS;
+		}
+	}
+}
 
 
 SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source);
@@ -163,17 +208,37 @@ SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res);
 
 SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res);
 
+/**
+ * @param source - the queue to check.
+ * @return the min value of the queue.
+ * In case queue is empty or @param is a NULL pointer return -1.
+ */
+double spBPQueueMinValue(SPBPQueue* source)
+{
+	if (source == NULL || is_empty)
+		return -1;
+	return source->elements[source->size - 1];//the last element it the lowest.
+//###############################################need to check if elements is a NULL pointer??################################
+}
 
-double spBPQueueMinValue(SPBPQueue* source);
-
-
-double spBPQueueMaxValue(SPBPQueue* source);
+/**
+ * @param source - the queue to check.
+ * @return the max value of the queue.
+ * In case queue is empty or @param is a NULL pointer return -1.
+ */
+double spBPQueueMaxValue(SPBPQueue* source)
+{
+	if (source == NULL || is_empty)
+		return -1;
+	return source->elements[0];//the first element is the biggest.
+//###############################################need to check if elements is a NULL pointer??################################
+}
 
 /**
  * say whatever the Queue is empty or not.
  *
  * @param source - the Queue to check.
- * @retrun true in case Queue is empty or the Queue is a NULL pointer,
+ * @return true in case Queue is empty or the Queue is a NULL pointer,
  *Otherwise, return false.
  */
 bool spBPQueueIsEmpty(SPBPQueue* source)
@@ -187,7 +252,7 @@ bool spBPQueueIsEmpty(SPBPQueue* source)
  * say whatever the Queue is full or not
  *
  * @param source - the Queue to check.
- * @retrun true in case Queue is full or the Queue is a NULL pointer,
+ * @return true in case Queue is full or the Queue is a NULL pointer,
  * Otherwise, return false.
  */
 bool spBPQueueIsFull(SPBPQueue* source);
