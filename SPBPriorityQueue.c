@@ -10,7 +10,7 @@ struct sp_bp_queue_t
 };
 
 #define InsertElemNext(*source,i,index,value) {source->elements[i].index = index; source->elements[i].value = value;}
-#define CheckIfNULL(*source){ if ( source == NULL) return NULL}
+//#define CheckIfNULL(*source){ if ( source == NULL) return NULL}
 
 /**
  * Allocate a new Queue in the memory.
@@ -215,11 +215,46 @@ SP_BPQUEUE_MSG spBPQueueDequeue(SPBPQueue* source){
 	source->size--;
 }
 
+/**
+ * Return a copy of the element with the lowest value.
+ *
+ * @param source - the queue need to copy the element with the lowest value. 
+ * @param res - the pointer to the element with the lowest value.
+ * @return a new SP_BPQUEUE_MSG object with the information on the Peek.
+ *
+ */
+SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res)
+{
+	if (source == NULL)
+		return SP_BPQUEUE_INVALID_ARGUMENT;
+	if (source->szie == 0)
+		return SP_BPQUEUE_EMPTY;
+	res->index = source->elements[soruce->size -1].index;
+	res->value = source->elements[source->size -1].value;
+	return SP_BPQUEUE_SUCCESS;
 
-SP_BPQUEUE_MSG spBPQueuePeek(SPBPQueue* source, BPQueueElement* res);
+}
 
 
-SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res);
+/**
+ * Return a copy of the element with the highest value.
+ *
+ * @param source - the queue need to copy the element with the highest value. 
+ * @param res - the pointer to the element with the higest value.
+ * @return a new SP_BPQUEUE_MSG object with the information on the Peek.
+ *
+ */
+SP_BPQUEUE_MSG spBPQueuePeekLast(SPBPQueue* source, BPQueueElement* res)
+{
+	if (source == NULL)
+		return SP_BPQUEUE_INVALID_ARGUMENT;
+	if (source->szie == 0)
+		return SP_BPQUEUE_EMPTY;
+	res->index = source->elements[0].index;
+	res->value = source->elements[0].value;
+	return SP_BPQUEUE_SUCCESS;
+
+}
 
 /**
  * @param source - the queue to check.
