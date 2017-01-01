@@ -185,7 +185,6 @@ bool spBPQueueIsFullCheck()
 	spBPQueueDestroy(q);
 	return true;
 }
-
 int main()
 {
 	RUN_TEST(spBPQueueCreateCheck);

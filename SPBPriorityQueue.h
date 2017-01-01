@@ -12,7 +12,7 @@
 /** type used to define Bounded priority queue **/
 typedef struct sp_bp_queue_t SPBPQueue;
 
-typedef strcut sp_bpq_element_t {
+typedef struct sp_bpq_element_t {
 	int index;
 	double value;
 } BPQueueElement;

@@ -107,11 +107,13 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 */
 void spBPQueueDestroy(SPBPQueue* source)
 {
-	CheckIfNULL(source,void)
-	if(source->elements != NULL) {	
-		free(source->elements);
+	if (source != NULL)
+	{
+		if(source->elements != NULL) {	
+			free(source->elements);
+		}
+		free(source);
 	}
-	free(source);
 }
 
 /**
@@ -170,12 +172,11 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	//in case the source queue is full
 	if ( source->size == source->max_size)
 	{
-		if (source->elements[0].value > value )
+		if (source->elements[0].value < value )
 		{
 			InsertElemNext(source,0,index,value)
-			return SP_BPQUEUE_SUCCESS;
-		}
-		return SP_BPQUEUE_FULL;
+			return SP_BPQUEUE_FULL;
+		}//need to solve when list is full and not the higest value.
 	}
 
 	source->size++;
@@ -188,7 +189,7 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 
 	//otherwise
 	int i;
-	for ( i = source->size -1 ; i > 0; i--) 
+	for ( i = source->size; i > 0; i--) 
 	{
 		InsertElemNext(source, i, source->elements[i-1].index, source->elements[i-1].value)
 		if ( source->elements [i-1].value > value)
@@ -197,6 +198,8 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 			return SP_BPQUEUE_SUCCESS;
 		}
 	}
+	//incase bigger then all
+	InsertElemNext(source, 0, index, value)
 	return SP_BPQUEUE_SUCCESS;
 }
 
