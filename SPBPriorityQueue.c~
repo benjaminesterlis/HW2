@@ -302,8 +302,3 @@ bool spBPQueueIsFull(SPBPQueue* source)
 	CheckIfNULL(source,true)
 	return (source->size == source->max_size);
 }
-
-int main(void)
-{
-	return 0;
-}
