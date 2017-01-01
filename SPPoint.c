@@ -15,7 +15,7 @@ void copy(double *, double *, int range);
 
 SPPoint* spPointCreate(double* data, int dim, int index) 
 {
-	if (dim < 0 || index < 0 || data == NULL)
+	if (dim <= 0 || index < 0 || data == NULL)
 		return NULL;
 	SPPoint *sp = malloc(sizeof(*sp));
 	if (sp == NULL)
@@ -67,7 +67,7 @@ int spPointGetIndex(SPPoint* point)
 
 double spPointGetAxisCoor(SPPoint* point, int axis) 
 {
-	assert (point!=NULL && axis < point->dim);
+	assert (point!=NULL || axis < point->dim);
 	return point->data[axis-1];
 }
 

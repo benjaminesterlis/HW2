@@ -16,7 +16,7 @@ bool spPointCreateCheck()
 	ASSERT_TRUE(spPointGetDimension(p) == dim);
 	for (i = 0; i < spPointGetDimension(p); ++i)
 	{
-		ASSERT_TRUE(spPointGetAxisCoor(p, i) == data[i]);
+		ASSERT_TRUE(spPointGetAxisCoor(p, i+1) == data[i]);
 	}
 	spPointDestroy(p);
 	return true;
@@ -72,7 +72,7 @@ bool spPointGetAxisCoorCheck()
 	SPPoint* p = spPointCreate(data, dim, index);
 	for (i = 0; i < dim; ++i)
 	{
-		ASSERT_TRUE(spPointGetAxisCoor(p, i) == data[i]);
+		ASSERT_TRUE(spPointGetAxisCoor(p, i+1) == data[i]);
 	}
 	spPointDestroy(p);
 	return true;
@@ -105,3 +105,4 @@ int main()
 	RUN_TEST(spPointGetAxisCoorCheck);
 	RUN_TEST(spPointL2SquaredDistanceCheck);
 	return 0;
+}
