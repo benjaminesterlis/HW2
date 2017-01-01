@@ -96,4 +96,6 @@ bool spBPQueueIsEmpty(SPBPQueue* source);
  */
 bool spBPQueueIsFull(SPBPQueue* source);
 
+void printq(SPBPQueue* source,int axis);
+
 #endif

@@ -2,6 +2,7 @@
 #include "unit_test_util.h"
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 bool spBPQueueCreateCheck()
 {
@@ -64,20 +65,53 @@ bool spBPQueueGetMaxSizeCheck()
 
 bool spBPQueueEnqueueCheck()
 {
+	// printf("-1\n");
+	// fflush(stdout);
 	int maxSize = 3;
+	// printf("0\n");
 	SPBPQueue* q = spBPQueueCreate(maxSize);
+	// printf("1\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(NULL, 2, 3) == SP_BPQUEUE_INVALID_ARGUMENT);
+	// printf("2\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(q, -1, 3) == SP_BPQUEUE_INVALID_ARGUMENT);
+	// printf("3\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 2, -1) == SP_BPQUEUE_INVALID_ARGUMENT);
+	// printf("4\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 1, 3) == SP_BPQUEUE_SUCCESS);
+	printq(q,0);
+	// printf("5\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 5, 2) == SP_BPQUEUE_SUCCESS);
+	printq(q,0);
+	// printf("6\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueMaxValue(q) == 3);
+	// printf("7\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueMinValue(q) == 2);
+	// printf("8\n");
+	// fflush(stdout);
+	printq(q,0);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 7, 23) == SP_BPQUEUE_SUCCESS);
+	printq(q,0);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 7, 40) == SP_BPQUEUE_FULL);
+	printq(q,0);
+	// printf("10\n");.
+	// fflush(stdout)
 	ASSERT_TRUE(spBPQueueEnqueue(q, 9, 23) == SP_BPQUEUE_FULL);
+	// printf("11\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueEnqueue(q, 6, 2.5) == SP_BPQUEUE_SUCCESS);
+	printq(q,0);
+	// printf("12\n");
+	// fflush(stdout);
 	ASSERT_TRUE(spBPQueueMaxValue(q) == 3);
+	// printf("13\n");
+	// fflush(stdout);
 	spBPQueueDestroy(q);
 	return true;
 }
