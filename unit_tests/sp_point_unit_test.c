@@ -4,8 +4,8 @@
 
 bool spPointCreateCheck()
 {
-	double data[2] = { 1.0, 1.0 };
-	int dim = 2;
+	double d[3] = {0.23,0.7,0.24};
+	int dim = 3;
 	int index = 1;
 	int i;
 	SPPoint* p = spPointCreate(data, dim, index);
@@ -24,8 +24,8 @@ bool spPointCreateCheck()
 
 bool spPointCopyCheck()
 {
-	double data[2] = { 1.0, 1.0 };
-	int dim = 2;
+	double d[3] = {0.23,0.7,0.24};
+	int dim = 3;
 	int index = 1;
 	int i;
 	SPPoint* p = spPointCreate(data, dim, index);
@@ -43,8 +43,8 @@ bool spPointCopyCheck()
 
 bool spPointGetDimensionCheck()
 {
-	double data[2] = { 1.0, 1.0 };
-	int dim = 2;
+	double d[3] = {0.23,0.7,0.24};
+	int dim = 3;
 	int index = 1;
 	SPPoint* p = spPointCreate(data, dim, index);
 	ASSERT_TRUE(spPointGetDimension(p) == dim);
@@ -54,8 +54,8 @@ bool spPointGetDimensionCheck()
 
 bool spPointGetIndexCheck()
 {
-	double data[2] = { 1.0, 1.0 };
-	int dim = 2;
+	double d[3] = {0.23,0.7,0.24};
+	int dim = 3;
 	int index = 1;
 	SPPoint* p = spPointCreate(data, dim, index);
 	ASSERT_TRUE(spPointGetIndex(p) == index);
@@ -65,8 +65,8 @@ bool spPointGetIndexCheck()
 
 bool spPointGetAxisCoorCheck()
 {
-	double data[2] = { 1.0, 1.0 };
-	int dim = 2;
+	double d[3] = {0.23,0.7,0.24};
+	int dim = 3;
 	int index = 1;
 	int i;
 	SPPoint* p = spPointCreate(data, dim, index);
@@ -80,17 +80,16 @@ bool spPointGetAxisCoorCheck()
 
 bool spPointL2SquaredDistanceCheck()
 {
-	double data1[2] = { 1.0, 1.0 };
-	double data2[2] = { 1.0, 0.0 };
-	int dim1 = 2;
-	int dim2 = 2;
-	int index1 = 1;
-	int index2 = 1;
-	SPPoint* p = spPointCreate(data1, dim1, index1);
-	SPPoint* q = spPointCreate(data2, dim2, index2);
+	double d[3] = {0.23,0.7,0.24};
+	double d1[3] = {1.23,0.7,0.25};
+	int dim = 3;
+	int ind1 = 13;
+	int ind2 = 12;
+	SPPoint* p = spPointCreate(d, dim, ind1);
+	SPPoint* q = spPointCreate(d1, dim, ind2);
 	ASSERT_TRUE(spPointL2SquaredDistance(p, p) == 0.0);
 	ASSERT_TRUE(spPointL2SquaredDistance(q, q) == 0.0);
-	ASSERT_FALSE(spPointL2SquaredDistance(p, q) == 0.0);
+	ASSERT_FALSE(spPointL2SquaredDistance(p, q) == 1.00005);
 	spPointDestroy(p);
 	spPointDestroy(q);
 	return true;
