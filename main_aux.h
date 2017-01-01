@@ -1,0 +1,1 @@
+void scan_point(int d,double* data);

@@ -177,7 +177,6 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 	{	
 		InsertElemNext(source,0,index,value)
 		source->size++;
-		printf("size_0:%d\n ",source->size);
 		return SP_BPQUEUE_SUCCESS;
 	}
 	int i;
@@ -209,7 +208,6 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 				InsertElemNext(source,i+1,source->elements[i].index,source->elements[i].value)
 				InsertElemNext(source,i,index,value)
 				source->size++;
-				printf("size_1:%d\n ",source->size);
 				return SP_BPQUEUE_SUCCESS;
 			}
 		}
@@ -217,7 +215,6 @@ SP_BPQUEUE_MSG spBPQueueEnqueue(SPBPQueue* source, int index, double value)
 		{
 			InsertElemNext(source,i+1,index,value)
 			source->size++;
-			printf("size_2:%d\n ",source->size);
 			return SP_BPQUEUE_SUCCESS;
 		}
 	}
@@ -334,11 +331,21 @@ bool spBPQueueIsFull(SPBPQueue* source)
 void printq(SPBPQueue* source,int axis)
 {
 	int i;
-	for ( i = 0; i < source->size; ++i)
+	for ( i = source->size -1; i >= 0; i--)
 	{
-		printf("%lf \t", source->elements[i].value);
-		if(axis)
-			printf("%d \n", source->elements[i].index);
+		switch (axis)
+		{
+			case 0:
+				printf("%lf \t", source->elements[i].value);
+				break;
+			case 1:
+				printf("%d", source->elements[i].index +1);
+				break;
+			case 2:
+				printf("%lf \t", source->elements[i].value);
+				printf("%d \n", source->elements[i].index +1);
+				break;
+		}
 	}
 	printf("\n");
 }

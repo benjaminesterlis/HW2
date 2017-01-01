@@ -174,6 +174,17 @@ bool spBPQueueIsEmpty(SPBPQueue* source);
  */
 bool spBPQueueIsFull(SPBPQueue* source);
 
+/**
+ * our own method. 
+ * print the info according to axis,
+ * which can be 0,1 or 2.
+ *
+ * @param source - the queue need to be printed, assumed not NULL and well defined.
+ * @axis - can be 0,1 or 2.
+ * if axis is 0 print only values.
+ * if axis is 1 print only index.
+ * if axis is 2 print both. 
+ */
 void printq(SPBPQueue* source,int axis);
 
 #endif

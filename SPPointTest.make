@@ -13,5 +13,3 @@ SPPoint.o: SPPoint.c SPPoint.h
 	$(CC) $(COMP_FLAG) -c -lm $*.c
 clean:
 	rm -f $(OBJS) $(EXEC)
-valg:
-	valgrind $(EXEC)
