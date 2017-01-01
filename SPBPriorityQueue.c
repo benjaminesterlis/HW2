@@ -107,11 +107,11 @@ SPBPQueue* spBPQueueCopy(SPBPQueue* source)
 */
 void spBPQueueDestroy(SPBPQueue* source)
 {
-	if ( source != NULL && !source->is_empty)
-	{
+	CheckIfNULL(source,void)
+	if(source->elements != NULL) {	
 		free(source->elements);
-		free(source);
 	}
+	free(source);
 }
 
 /**

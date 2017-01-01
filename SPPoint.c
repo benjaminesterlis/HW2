@@ -94,6 +94,8 @@ void copy(double *dest, double *src, int range)
 	}
 }
 
+//valgrind
+
 // int main(void)
 // {
 // 	double d[3] = {0.23,0.7,0.24};
